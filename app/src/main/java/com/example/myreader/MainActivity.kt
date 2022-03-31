@@ -17,21 +17,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyReaderTheme {
-                val db=FirebaseFirestore.getInstance()
-                val user:MutableMap<String,Any> =HashMap()
-                user["firstname"]="Sasha"
-                user["lastname"]="Morozov"
+
 
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener {
-                            Log.d("Test", "onCreate: $it.id")
-                        }
-                        .addOnFailureListener {
-                            Log.d("Test", "onCreate: $it ")
-                        }
+
                     Greeting("Android")
                 }
             }
