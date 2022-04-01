@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Reader</string>
+    <string name="create_acct">Please enter valid email and password that is at least 6 characters</string>
 </resources>

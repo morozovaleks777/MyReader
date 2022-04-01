@@ -1,7 +1,6 @@
 package com.example.myreader.screens.splash
 
 import android.view.animation.OvershootInterpolator
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -15,16 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.myreader.components.ReaderLogo
+import com.example.myreader.navigation.ReaderScreens
 import kotlinx.coroutines.delay
 
-@Preview
+
 @Composable
-fun SplashScreen(navController: NavController = NavController(context = LocalContext.current)) {
-  var isPlaying: Boolean = true
+fun SplashScreen(navController: NavController ) {
+  var isPlaying = true
     var currentRotation by remember { mutableStateOf(0f) }
 
     val rotation = remember { Animatable(currentRotation) }
@@ -63,7 +62,7 @@ fun SplashScreen(navController: NavController = NavController(context = LocalCon
     }
 
     val scale = remember {
-       androidx.compose.animation.core.Animatable(0f)
+       Animatable(0f)
     }
 
     LaunchedEffect(key1 = true){
@@ -72,6 +71,7 @@ fun SplashScreen(navController: NavController = NavController(context = LocalCon
                 .getInterpolation(it)
         }))
         delay(2000)
+        navController.navigate(ReaderScreens.LoginScreen.name)
     }
     Surface(
         modifier = Modifier
@@ -89,11 +89,7 @@ fun SplashScreen(navController: NavController = NavController(context = LocalCon
             Modifier.padding(1.dp), verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "My Reader",
-                style = MaterialTheme.typography.h3,
-                color = Color.Red.copy(alpha = 0.5f)
-            )
+            ReaderLogo()
             Spacer(modifier = Modifier.height(15.dp))
             Text(
                 text = "\"Read.Change.Yourself\"",
@@ -107,4 +103,6 @@ fun SplashScreen(navController: NavController = NavController(context = LocalCon
     }
 
 }
+
+
 

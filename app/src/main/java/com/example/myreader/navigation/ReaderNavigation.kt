@@ -1,6 +1,7 @@
 package com.example.myreader.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +13,7 @@ import com.example.myreader.screens.splash.SplashScreen
 import com.example.myreader.screens.stats.StatsScreen
 import com.example.myreader.screens.update.UpdateScreen
 
+@ExperimentalComposeUiApi
 @Composable
 fun ReaderNavigation() {
     val navController = rememberNavController()
