@@ -27,11 +27,12 @@ import com.example.myreader.R
 import com.example.myreader.components.ReaderLogo
 import com.example.myreader.components.loginScreenComponents.EmailInput
 import com.example.myreader.components.loginScreenComponents.PasswordInput
+import com.example.myreader.navigation.ReaderScreens
 
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController,viewModel: LoginScreenViewModel= androidx.lifecycle.viewmodel.compose.viewModel()) {
     val showLoginForm = rememberSaveable{
         mutableStateOf(true)
     }
@@ -43,13 +44,19 @@ fun LoginScreen(navController: NavController) {
             ReaderLogo()
             if(showLoginForm.value){
             UserForm(loading = false, isCreateAccount = false) { email, password ->
-                Log.d("Test", "LoginScreen: $email $password")
-            // TODO fb login
+              //  Log.d("Test", "LoginScreen: $email $password")
+
+                viewModel.signInWithEmailAndPassword(email, password){
+                    navController.navigate(ReaderScreens.HomeScreen.name)
+                }
              }
 
             }else {
                 UserForm(loading = false,isCreateAccount = true){
                         email, password ->
+                    viewModel.createUserWithEmailAndPassword(email,password){
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    }
                     // TODO fb account
                 }
             }
