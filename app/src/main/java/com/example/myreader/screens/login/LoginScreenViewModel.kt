@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myreader.model.MUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -21,6 +23,8 @@ class LoginScreenViewModel:ViewModel() {
         if(_loading.value==false) {_loading.value=true
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                val displayName = task.result.user?.email?.split("@")?.get(0)
+                createUser(displayName)
                 home()
 
             } else {
@@ -32,6 +36,21 @@ class LoginScreenViewModel:ViewModel() {
 
 
     }
+
+    private fun createUser(displayName: String?) {
+       val userId = auth.currentUser?.uid
+        val user = MUser(
+        userId = userId.toString(),
+        displayName=displayName.toString(),
+        quote = "life is life",
+        profession = "android developer",
+        avatarUrl = "",
+        id=null).toMap()
+        FirebaseFirestore.getInstance().collection("users")
+            .add(user)
+
+    }
+
 
     fun signInWithEmailAndPassword(email:String, password:String,home:() -> Unit)=viewModelScope.launch{
         try {

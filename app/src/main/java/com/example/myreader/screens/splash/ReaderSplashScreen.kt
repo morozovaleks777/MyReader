@@ -18,12 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.myreader.components.ReaderLogo
 import com.example.myreader.navigation.ReaderScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 
 @Composable
 fun SplashScreen(navController: NavController ) {
-  var isPlaying = true
+    var isPlaying = true
     var currentRotation by remember { mutableStateOf(0f) }
 
     val rotation = remember { Animatable(currentRotation) }
@@ -62,15 +63,20 @@ fun SplashScreen(navController: NavController ) {
     }
 
     val scale = remember {
-       Animatable(0f)
+        Animatable(0f)
     }
 
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         scale.animateTo(0.9f, animationSpec = tween(800, easing = {
             OvershootInterpolator(8f)
                 .getInterpolation(it)
         }))
         delay(2000)
+//        if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+//            navController.navigate(ReaderScreens.LoginScreen.name)
+//        } else {
+//            navController.navigate(ReaderScreens.HomeScreen.name)
+//        }
         navController.navigate(ReaderScreens.LoginScreen.name)
     }
     Surface(
