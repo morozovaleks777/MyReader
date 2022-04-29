@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.myreader.model.MUser
+import com.example.myreader.navigation.ReaderScreens
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -60,11 +62,13 @@ class LoginScreenViewModel:ViewModel() {
                     home()
                 }else {
                     Log.d("Test", "signInWithEmailAndPassword:${task.result.toString()} ")
+
                 }
             }
 
         }catch (ex:Exception){
             Log.d("Test", "signInWithEmailAndPassword: ${ex.message}")
+
         }
 
     }
